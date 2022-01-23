@@ -6,14 +6,14 @@ root = Tk()
 root.geometry("1000x1000")
 
 img1 = Image.open("D:\photos\Kom Trip\IMG_0280.JPG")
-img2 = Image.open("D:\photos\Kom Trip\IMG_0289.JPG")
+img2 = Image.open("D:\photos\Kom Trip\IMG_0302.JPG")
 img3 = Image.open("D:\photos\Kom Trip\IMG_0272.JPG")
-img4 = Image.open("D:\photos\Kom Trip\IMG_0292.JPG")
+img4 = Image.open("D:\photos\Kom Trip\IMG_0307.JPG")
 
-img1 = img1.resize((500, 500), Image.ANTIALIAS)
-img2 = img2.resize((500, 500), Image.ANTIALIAS)
-img3 = img3.resize((500, 500), Image.ANTIALIAS)
-img4 = img4.resize((500, 500), Image.ANTIALIAS)
+img1 = img1.resize((200, 200), Image.ANTIALIAS)
+img2 = img2.resize((200, 200), Image.ANTIALIAS)
+img3 = img3.resize((200, 200), Image.ANTIALIAS)
+img4 = img4.resize((200, 200), Image.ANTIALIAS)
 
 img1_resize = ImageTk.PhotoImage(img1)
 img2_resize = ImageTk.PhotoImage(img2)
@@ -32,13 +32,13 @@ def getLabels(path):
 
     return labels
 
-paths = ["D:\photos\Kom Trip\IMG_0280.JPG", "D:\photos\Kom Trip\IMG_0289.JPG", "D:\photos\Kom Trip\IMG_0272.JPG", "D:\photos\Kom Trip\IMG_0292.JPG"]
+image_paths = ["D:\photos\Kom Trip\IMG_0280.JPG", "D:\photos\Kom Trip\IMG_0302.JPG", "D:\photos\Kom Trip\IMG_0272.JPG", "D:\photos\Kom Trip\IMG_0307.JPG"]
 img_list = [img1_resize, img2_resize, img3_resize, img4_resize]
 
 label = Label(image=img1_resize)
 label.grid(row=0, column=0, columnspan=3)
 
-label_arr = getLabels(paths[0])
+label_arr = getLabels(image_paths[0])
 for g in range(0, len(label_arr)):
     label_arr[g].grid(row=g, column=0)
 
@@ -54,9 +54,9 @@ def forward(image_number):
     label.grid_forget()
     label = Label(image=img_list[image_number-1])
 
-    # label_arr = getLabels(paths[image_number-1])
-    # for k in range(0, len(label_arr)):
-    #     label_arr[k].grid(row=k, column=0)
+    label_arr = getLabels(image_paths[image_number - 1])
+    for k in range(0, len(label_arr)):
+        label_arr[k].grid(row=k, column=0)
 
     button_back = Button(root, text="<<", command=lambda: back(image_number-1))
     button_forward = Button(root, text=">>", command=lambda: forward(image_number+1))
@@ -80,9 +80,9 @@ def back(image_number):
     label.grid_forget()
     label = Label(image=img_list[image_number - 1])
 
-    # label_arr = getLabels(paths[image_number - 1])
-    # for e in range(0, len(label_arr)):
-    #     label_arr[e].grid(row=e, column=0)
+    label_arr = getLabels(image_paths[image_number - 1])
+    for e in range(0, len(label_arr)):
+        label_arr[e].grid(row=e, column=0)
 
     button_back = Button(root, text="<<", command=lambda: back(image_number - 1))
     button_forward = Button(root, text=">>", command=lambda: forward(image_number + 1))
