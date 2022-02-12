@@ -1,4 +1,5 @@
 import requests
+from tkinter import Label
 
 class Tag:
     def __init__(self, name, confidence):
@@ -24,3 +25,16 @@ def getTags(path):
         tag_arr.append(temp_tag)
 
     return tag_arr
+
+def getTagArray(path, frame):
+    arr = getTags(path)
+    tags = []
+
+    for i in range(0, len(arr)):
+        empty_label = Label(frame, text="")
+        tags.append(empty_label)
+
+    for j in range(0, len(tags)):
+        tags[j].configure(text=arr[j].name)
+
+    return tags
