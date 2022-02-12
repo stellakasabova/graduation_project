@@ -16,14 +16,22 @@ def logIn(input1, input2):
     element1 = driver.find_element(by=By.NAME, value='username')
     element1.clear()
     element1.send_keys(username)
-    
+
     element2 = driver.find_element(by=By.NAME, value='password')
     element2.clear()
     element2.send_keys(password)
 
     driver.find_element(by=By.NAME, value='login').click()
     driver.get('https://pixabay.com/accounts/media/')
+
     driver.get('https://pixabay.com/accounts/media/upload/')
+    driver.find_element(by=By.CLASS_NAME, value='dialog-container').find_element(by=By.NAME, value='ownership').click()
+    driver.find_element(by=By.CLASS_NAME, value='dialog-container').find_element(by=By.NAME, value='license').click()
+    driver.find_element(by=By.CLASS_NAME, value='dialog-container').find_element(by=By.CLASS_NAME, value='primary-button').click()
+
+    files = driver.find_element(by=By.CLASS_NAME, value='dz-hidden-input')
+    files.send_keys('D:/photos/Upload/IMG_0386.JPG\nD:/photos/Upload/IMG_0389.png')
+    files.submit()
 
 def upload():
     upload_window = Toplevel(height=300, width=300)
