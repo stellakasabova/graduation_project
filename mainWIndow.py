@@ -1,9 +1,12 @@
 import os
 import PIL
+
 from PIL import ImageTk, Image
 from tkinter import *
 from tkinter import filedialog
-from getTags import getTagArray
+
+from getTags import getTagLabels
+from login import logInTopLevel
 from uploadToBlob import upload_blob
 from buttonFunctions import forward, back
 
@@ -16,25 +19,28 @@ def getImages(path_param):
     images = []
     tag_arr = []
 
-    extensions = ('.JPG', '.jpg', '.JPEG', '.jpeg', '.PNG', '.png')
+    extensions = ('.JPG', '.jpg', '.JPEG', '.jpeg')
     for file in os.listdir(path_param):
         if file.endswith(extensions):
             path = os.path.join(path_param, file)
+            # Azure API only works with images 4MB and under
             if os.path.getsize(path) / (1024 * 1024) < 4:
                 image_paths.append(path)
 
+    # Resizes photos for consistent image display
     for image in image_paths:
         temp_image = PIL.Image.open(image)
         temp_image = temp_image.resize((500, 500), PIL.Image.ANTIALIAS)
         temp_resized = ImageTk.PhotoImage(temp_image)
         images.append(temp_resized)
 
+    # Adds frames for structured display of elements
     image_frame = Frame(root, width=700, height=700)
     image_frame.place(anchor=CENTER, relx=.4, rely=.5)
     tag_frame = Frame(root)
     tag_frame.place(anchor=CENTER, relx=.65, rely=.5)
 
-    tag_arr = getTagArray(image_paths[0], tag_frame)
+    tag_arr = getTagLabels(image_paths[0], tag_frame)
     for g in range(0, len(tag_arr)):
         tag_arr[g].grid(row=g, column=0)
 
@@ -54,6 +60,9 @@ def getImages(path_param):
 
     archive_button = Button(tag_frame, text="Archive directory", command=lambda: upload_blob(path_param))
     archive_button.grid(row=15)
+
+    upload_button = Button(tag_frame, text="upload", command=lambda: logInTopLevel(path_param))
+    upload_button.grid(row=16)
 
     dir_button.destroy()
 
