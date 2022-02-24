@@ -17,6 +17,7 @@ def getTags(path):
     with open(path, 'rb') as image:
         data = image.read()
 
+    # Connect to Computer Vision API and get tags
     response_tags = requests.post(analyze_url, headers=headers, params=params_tags, data=data)
     tags = response_tags.json()
     tag_arr = []
@@ -26,7 +27,7 @@ def getTags(path):
 
     return tag_arr
 
-def getTagArray(path, frame):
+def getTagLabels(path, frame):
     arr = getTags(path)
     tags = []
 

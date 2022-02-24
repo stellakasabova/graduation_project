@@ -1,14 +1,16 @@
 from tkinter import *
-from getTags import getTagArray
+from getTags import getTagLabels
 
 def forward(image_number, image_label, image_frame, images, image_paths, tag_frame, tag_arr):
+    # Delete old tags
     for i in range(0, len(tag_arr)):
         tag_arr[i].grid_forget()
 
     image_label.grid_forget()
     image_label = Label(image_frame, image=images[image_number - 1])
 
-    tag_arr = getTagArray(image_paths[image_number - 1], tag_frame)
+    # Display new tags
+    tag_arr = getTagLabels(image_paths[image_number - 1], tag_frame)
     for j in range(0, len(tag_arr)):
         tag_arr[j].grid(row=j, column=0)
 
@@ -35,13 +37,15 @@ def forward(image_number, image_label, image_frame, images, image_paths, tag_fra
     button_forward.grid(row=1, column=2)
 
 def back(image_number, image_label, image_frame, images, image_paths, tag_frame, tag_arr):
+    # Delete old tags
     for i in range(0, len(tag_arr)):
         tag_arr[i].grid_forget()
 
     image_label.grid_forget()
     image_label = Label(image_frame, image=images[image_number - 1])
 
-    tag_arr = getTagArray(image_paths[image_number - 1], tag_frame)
+    # Display new tags
+    tag_arr = getTagLabels(image_paths[image_number - 1], tag_frame)
     for j in range(0, len(tag_arr)):
         tag_arr[j].grid(row=j, column=0)
 
