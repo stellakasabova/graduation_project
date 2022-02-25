@@ -9,6 +9,5 @@ def zipFiles(path):
         for file in os.listdir(path):
             if file.endswith(extensions):
                 file_path = os.path.join(path, file)
-                print(file_path)
                 zip_object.write(file_path, basename(file_path))
     zip_object.close()
