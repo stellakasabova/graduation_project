@@ -7,7 +7,7 @@ from tkinter import *
 from tkinter import filedialog
 
 from getImageData import getTagLabels
-from login import logInTopLevel
+from upload import logInTopLevel
 from uploadToBlob import upload_blob
 from buttonFunctions import forward, back
 
@@ -66,8 +66,13 @@ def getImages(path_param):
     archive_button = Button(tag_frame, text="Archive directory", command=lambda: upload_blob(path_param))
     archive_button.grid(row=15)
 
-    upload_button = Button(tag_frame, text="upload", command=lambda: logInTopLevel(path_param))
-    upload_button.grid(row=16)
+    upload_zoonar_button = Button(tag_frame, text="Upload to Zoonar",
+                                  command=lambda: logInTopLevel(path_param, 'ftp.zoonar.com'))
+    upload_zoonar_button.grid(row=16)
+
+    upload_alamy_button = Button(tag_frame, text="Upload to Alamy",
+                                  command=lambda: logInTopLevel(path_param, 'upload.alamy.com'))
+    upload_alamy_button.grid(row=17)
 
     dir_button.destroy()
 
