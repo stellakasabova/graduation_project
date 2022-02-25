@@ -1,5 +1,6 @@
 import requests
 from tkinter import Label
+from iptcinfo3 import IPTCInfo
 
 class Tag:
     def __init__(self, name, confidence):
@@ -39,3 +40,15 @@ def getTagLabels(path, frame):
         tags[j].configure(text=arr[j].name)
 
     return tags
+
+def addIPTCInfo(img_path):
+    temp_tag_arr = []
+
+    tag_arr = getTags(img_path)
+    for t in tag_arr:
+        temp_tag_arr.append(t.name)
+
+    img_data = IPTCInfo(img_path, force=True)
+    img_data['keywords'] = []
+    img_data['keywords'] = temp_tag_arr
+    img_data.save()
