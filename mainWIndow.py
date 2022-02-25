@@ -1,3 +1,4 @@
+import logging
 import os
 import PIL
 
@@ -15,6 +16,10 @@ root.title('Application')
 root.geometry("800x800")
 
 def getImages(path_param):
+    logging.basicConfig(level=logging.DEBUG, filename='logs.log', format='%(asctime)s %(levelname)s:%(message)s')
+    logger = logging.getLogger(__name__)
+    logger.info("Visualizing directory: " + path_param)
+
     image_paths = []
     images = []
     tag_arr = []
