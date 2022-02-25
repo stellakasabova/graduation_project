@@ -1,5 +1,5 @@
 from tkinter import *
-from getTags import getTagLabels
+from getImageData import getTagLabels
 
 def forward(image_number, image_label, image_frame, images, image_paths, tag_frame, tag_arr):
     # Delete old tags
