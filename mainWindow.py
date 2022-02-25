@@ -6,7 +6,7 @@ from PIL import ImageTk, Image
 from tkinter import *
 from tkinter import filedialog
 
-from getTags import getTagLabels
+from getImageData import getTagLabels
 from login import logInTopLevel
 from uploadToBlob import upload_blob
 from buttonFunctions import forward, back
