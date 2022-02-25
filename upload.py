@@ -3,7 +3,7 @@ from tkinter import *
 import ftplib
 import os
 from tkinter import messagebox
-from iptc import addIPTCInfo
+from getImageData import addIPTCInfo
 
 def upload(username_input, password_input, path):
     logging.basicConfig(level=logging.DEBUG, filename='logs.log', format='%(asctime)s %(levelname)s:%(message)s')
