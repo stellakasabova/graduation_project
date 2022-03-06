@@ -1,5 +1,6 @@
 from tkinter import *
 from getImageData import getTagLabels
+from uploadToBlob import upload_blob
 
 def forward(image_number, image_label, image_frame, images, image_paths, tag_frame, tag_arr):
     # Delete old tags
@@ -70,3 +71,16 @@ def back(image_number, image_label, image_frame, images, image_paths, tag_frame,
     image_label.grid(row=0, column=0, columnspan=3)
     button_back.grid(row=1, column=0)
     button_forward.grid(row=1, column=2)
+
+def archive(path):
+    archive_window = Toplevel(height=300, width=300)
+
+    zip_name_label = Label(archive_window, text="What name should the directory be archived under? (Please separate "
+                                                "words with underscores, not spaces)")
+    zip_name_label.pack()
+    zip_name_input = Entry(archive_window)
+    zip_name_input.pack()
+
+    submit_button = Button(archive_window, text="Submit", command=lambda: upload_blob(path, zip_name_input.get()))
+    submit_button.pack()
+

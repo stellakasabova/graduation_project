@@ -8,12 +8,11 @@ from tkinter import filedialog
 
 from getImageData import getTagLabels
 from upload import logInTopLevel
-from uploadToBlob import upload_blob
-from buttonFunctions import forward, back
+from buttonFunctions import forward, back, archive
 
 root = Tk()
 root.title('Application')
-root.geometry("800x800")
+root.state("zoomed")
 
 def getImages(path_param):
     logging.basicConfig(level=logging.DEBUG, filename='logs.log', format='%(asctime)s %(levelname)s:%(message)s')
@@ -63,7 +62,7 @@ def getImages(path_param):
                                                                             tag_arr))
     button_forward.grid(row=1, column=2)
 
-    archive_button = Button(tag_frame, text="Archive directory", command=lambda: upload_blob(path_param))
+    archive_button = Button(tag_frame, text="Archive directory", command=lambda: archive(path_param))
     archive_button.grid(row=15)
 
     upload_zoonar_button = Button(tag_frame, text="Upload to Zoonar",
