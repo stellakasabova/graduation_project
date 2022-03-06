@@ -6,7 +6,7 @@ from PIL import ImageTk, Image
 from tkinter import *
 from tkinter import filedialog
 
-from getImageData import getTagLabels
+from getImageData import getTagLabels, getCaption
 from upload import logInTopLevel
 from buttonFunctions import forward, back, archive
 
@@ -51,9 +51,13 @@ def getImages(path_param):
     image_label = Label(image_frame, image=images[0])
     image_label.grid(row=0, column=0, columnspan=3)
 
+    caption_label = Label(image_frame, text=getCaption(image_paths[0]))
+    caption_label.grid(row=1, column=1)
+
     button_back = Button(image_frame, text="<<", command=back, state=DISABLED)
     button_back.grid(row=1, column=0)
     button_forward = Button(image_frame, text=">>", command=lambda: forward(2,
+                                                                            caption_label,
                                                                             image_label,
                                                                             image_frame,
                                                                             images,

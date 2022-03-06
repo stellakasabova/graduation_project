@@ -24,7 +24,8 @@ def getTags(path):
     tag_arr = []
     for i in range(0, len(tags["tags"])):
         temp_tag = Tag(tags["tags"][i]["name"], tags["tags"][i]["confidence"])
-        tag_arr.append(temp_tag)
+        if temp_tag.confidence > 0.5:
+            tag_arr.append(temp_tag)
 
     return tag_arr
 
@@ -41,6 +42,22 @@ def getTagLabels(path, frame):
 
     return tags
 
+def getCaption(path):
+    subscription_key_file = open("subscription_key.txt", "r")
+    subscription_key = subscription_key_file.read()
+    endpoint = 'https://cvazureapi.cognitiveservices.azure.com/'
+    analyze_url = endpoint + "vision/v3.2/analyze?"
+
+    headers = {'Ocp-Apim-Subscription-Key': subscription_key, 'Content-Type': 'application/octet-stream'}
+    params_tags = {'visualFeatures': 'Description'}
+    with open(path, 'rb') as image:
+        data = image.read()
+
+    # Connect to Computer Vision API and get tags
+    response_captions = requests.post(analyze_url, headers=headers, params=params_tags, data=data)
+    caption = response_captions.json()
+    return caption["description"]["captions"][0]["text"]
+
 def addIPTCInfo(img_path):
     temp_tag_arr = []
 
@@ -51,4 +68,8 @@ def addIPTCInfo(img_path):
     img_data = IPTCInfo(img_path, force=True)
     img_data['keywords'] = []
     img_data['keywords'] = temp_tag_arr
+
+    img_data['caption/abstract'] = []
+    img_data['caption/abstract'] = [getCaption(img_path), "stock photo"]
+
     img_data.save()
