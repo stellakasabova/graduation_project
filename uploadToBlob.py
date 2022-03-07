@@ -1,15 +1,27 @@
+import json
 import logging
 import os
 
 from azure.core.exceptions import HttpResponseError
 
+from encrypt import *
 from zipFiles import zipFiles
 from azure.storage.blob import BlobServiceClient
 from tkinter import messagebox
 
 def upload_blob(path, zip_name):
-    connection = open("connection_string.txt", "r")
-    connection_string = connection.read()
+    decrypted_data = str(decrypt_keys())
+    decrypted_data.replace("'", '"')
+
+    result = json.loads(decrypted_data)
+    connection_string = result["connection"]
+
+    with open('sas_keys.json', 'w') as f:
+        f.write(decrypted_data)
+        f.close()
+
+    encrypt_keys()
+
     blob_container = "blob"
 
     zipFiles(path, zip_name)
@@ -29,6 +41,5 @@ def upload_blob(path, zip_name):
     finally:
         logger.debug("Archiving done")
 
-    connection.close()
     messagebox.showinfo("Done", "Archiving done!")
 
