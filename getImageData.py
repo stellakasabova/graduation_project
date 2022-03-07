@@ -1,15 +1,27 @@
+import json
+
 import requests
 from tkinter import Label
 from iptcinfo3 import IPTCInfo
-
+from encrypt import *
 class Tag:
     def __init__(self, name, confidence):
         self.name = name
         self.confidence = confidence
 
 def getTags(path):
-    subscription_key_file = open("subscription_key.txt", "r")
-    subscription_key = subscription_key_file.read()
+    decrypted_data = str(decrypt_keys())
+    decrypted_data.replace("'", '"')
+
+    result = json.loads(decrypted_data)
+    subscription_key = result["subscription"]
+
+    with open('sas_keys.json', 'w') as f:
+        f.write(decrypted_data)
+        f.close()
+
+    encrypt_keys()
+
     endpoint = 'https://cvazureapi.cognitiveservices.azure.com/'
     analyze_url = endpoint + "vision/v3.2/analyze?"
 
@@ -43,8 +55,18 @@ def getTagLabels(path, frame):
     return tags
 
 def getCaption(path):
-    subscription_key_file = open("subscription_key.txt", "r")
-    subscription_key = subscription_key_file.read()
+    decrypted_data = str(decrypt_keys())
+    decrypted_data.replace("'", '"')
+
+    result = json.loads(decrypted_data)
+    subscription_key = result["subscription"]
+
+    with open('sas_keys.json', 'w') as f:
+        f.write(decrypted_data)
+        f.close()
+
+    encrypt_keys()
+
     endpoint = 'https://cvazureapi.cognitiveservices.azure.com/'
     analyze_url = endpoint + "vision/v3.2/analyze?"
 

@@ -9,6 +9,7 @@ from tkinter import filedialog
 from getImageData import getTagLabels, getCaption
 from upload import logInTopLevel
 from buttonFunctions import forward, back, archive
+from encrypt import encrypt_keys
 
 root = Tk()
 root.title('Application')
@@ -79,6 +80,7 @@ def getImages(path_param):
 
     dir_button.destroy()
 
+encrypt_keys()
 dir_button = Button(root, text="Choose directory", command=lambda: getImages(filedialog.askdirectory()))
 dir_button.place(anchor=CENTER, relx=.5, rely=.5)
 
