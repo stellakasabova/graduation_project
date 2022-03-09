@@ -3,7 +3,7 @@ from getImageData import getTagLabels, getCaption
 from uploadToBlob import upload_blob
 
 
-def cycle_images(image_number, caption_label, image_label, image_frame, images, image_paths, tag_frame, tag_arr):
+def cycleImages(image_number, caption_label, image_label, image_frame, images, image_paths, tag_frame, tag_arr):
     # Delete old tags
     for i in range(0, len(tag_arr)):
         tag_arr[i].grid_forget()
@@ -21,22 +21,22 @@ def cycle_images(image_number, caption_label, image_label, image_frame, images, 
     for j in range(0, len(tag_arr)):
         tag_arr[j].grid(row=j, column=0)
 
-    button_back = Button(image_frame, text="<<", command=lambda: cycle_images(image_number - 1,
-                                                                              caption_label,
-                                                                              image_label,
-                                                                              image_frame,
-                                                                              images,
-                                                                              image_paths,
-                                                                              tag_frame,
-                                                                              tag_arr))
-    button_forward = Button(image_frame, text=">>", command=lambda: cycle_images(image_number + 1,
-                                                                                 caption_label,
-                                                                                 image_label,
-                                                                                 image_frame,
-                                                                                 images,
-                                                                                 image_paths,
-                                                                                 tag_frame,
-                                                                                 tag_arr))
+    button_back = Button(image_frame, text="<<", command=lambda: cycleImages(image_number - 1,
+                                                                             caption_label,
+                                                                             image_label,
+                                                                             image_frame,
+                                                                             images,
+                                                                             image_paths,
+                                                                             tag_frame,
+                                                                             tag_arr))
+    button_forward = Button(image_frame, text=">>", command=lambda: cycleImages(image_number + 1,
+                                                                                caption_label,
+                                                                                image_label,
+                                                                                image_frame,
+                                                                                images,
+                                                                                image_paths,
+                                                                                tag_frame,
+                                                                                tag_arr))
 
     if image_number == len(images):
         button_forward = Button(image_frame, text=">>", state=DISABLED)

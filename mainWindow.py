@@ -8,7 +8,7 @@ from tkinter import filedialog
 
 from getImageData import getTagLabels, getCaption
 from upload import logInTopLevel
-from buttonFunctions import cycle_images, archive
+from buttonFunctions import cycleImages, archive
 
 root = Tk()
 root.title('Application')
@@ -55,16 +55,16 @@ def getImages(path_param):
     caption_label = Label(image_frame, text=getCaption(image_paths[0]))
     caption_label.grid(row=1, column=1)
 
-    button_back = Button(image_frame, text="<<", command=cycle_images, state=DISABLED)
+    button_back = Button(image_frame, text="<<", command=cycleImages, state=DISABLED)
     button_back.grid(row=1, column=0)
-    button_forward = Button(image_frame, text=">>", command=lambda: cycle_images(2,
-                                                                                 caption_label,
-                                                                                 image_label,
-                                                                                 image_frame,
-                                                                                 images,
-                                                                                 image_paths,
-                                                                                 tag_frame,
-                                                                                 tag_arr))
+    button_forward = Button(image_frame, text=">>", command=lambda: cycleImages(2,
+                                                                                caption_label,
+                                                                                image_label,
+                                                                                image_frame,
+                                                                                images,
+                                                                                image_paths,
+                                                                                tag_frame,
+                                                                                tag_arr))
     button_forward.grid(row=1, column=2)
 
     archive_button = Button(tag_frame, text="Archive directory", command=lambda: archive(path_param))
