@@ -16,9 +16,9 @@ def upload_blob(path, zip_name):
     result = json.loads(decrypted_data)
     connection_string = result["connection"]
 
-    with open('sas_keys.json', 'w') as f:
-        f.write(decrypted_data)
-        f.close()
+    with open('sas_keys.json', 'w') as file:
+        file.write(decrypted_data)
+        file.close()
 
     encrypt_keys()
 
