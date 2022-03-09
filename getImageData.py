@@ -4,13 +4,14 @@ import requests
 from tkinter import Label
 from iptcinfo3 import IPTCInfo
 from encrypt import *
+
 class Tag:
     def __init__(self, name, confidence):
         self.name = name
         self.confidence = confidence
 
 def getTags(path):
-    decrypted_data = str(decrypt_keys())
+    decrypted_data = str(decryptKeys())
     decrypted_data.replace("'", '"')
 
     result = json.loads(decrypted_data)
@@ -20,7 +21,7 @@ def getTags(path):
         file.write(decrypted_data)
         file.close()
 
-    encrypt_keys()
+    encryptKeys()
 
     endpoint = 'https://cvazureapi.cognitiveservices.azure.com/'
     analyze_url = endpoint + "vision/v3.2/analyze?"
@@ -33,6 +34,7 @@ def getTags(path):
     # Connect to Computer Vision API and get tags
     response_tags = requests.post(analyze_url, headers=headers, params=params_tags, data=data)
     tags = response_tags.json()
+
     tag_arr = []
     for i in range(0, len(tags["tags"])):
         temp_tag = Tag(tags["tags"][i]["name"], tags["tags"][i]["confidence"])
@@ -55,7 +57,7 @@ def getTagLabels(path, frame):
     return tags
 
 def getCaption(path):
-    decrypted_data = str(decrypt_keys())
+    decrypted_data = str(decryptKeys())
     decrypted_data.replace("'", '"')
 
     result = json.loads(decrypted_data)
@@ -65,7 +67,7 @@ def getCaption(path):
         f.write(decrypted_data)
         f.close()
 
-    encrypt_keys()
+    encryptKeys()
 
     endpoint = 'https://cvazureapi.cognitiveservices.azure.com/'
     analyze_url = endpoint + "vision/v3.2/analyze?"

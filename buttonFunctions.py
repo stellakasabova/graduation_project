@@ -1,6 +1,6 @@
 from tkinter import *
 from getImageData import getTagLabels, getCaption
-from uploadToBlob import upload_blob
+from uploadToBlob import uploadBlob
 
 
 def cycleImages(image_number, caption_label, image_label, image_frame, images, image_paths, tag_frame, tag_arr):
@@ -54,5 +54,5 @@ def archive(path):
     zip_name_input = Entry(archive_window)
     zip_name_input.pack()
 
-    submit_button = Button(archive_window, text="Submit", command=lambda: upload_blob(path, zip_name_input.get()))
+    submit_button = Button(archive_window, text="Submit", command=lambda: uploadBlob(path, zip_name_input.get()))
     submit_button.pack()
