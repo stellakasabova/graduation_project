@@ -2,7 +2,8 @@ from tkinter import *
 from getImageData import getTagLabels, getCaption
 from uploadToBlob import upload_blob
 
-def forward(image_number, caption_label, image_label, image_frame, images, image_paths, tag_frame, tag_arr):
+
+def cycle_images(image_number, caption_label, image_label, image_frame, images, image_paths, tag_frame, tag_arr):
     # Delete old tags
     for i in range(0, len(tag_arr)):
         tag_arr[i].grid_forget()
@@ -20,22 +21,22 @@ def forward(image_number, caption_label, image_label, image_frame, images, image
     for j in range(0, len(tag_arr)):
         tag_arr[j].grid(row=j, column=0)
 
-    button_back = Button(image_frame, text="<<", command=lambda: back(image_number - 1,
-                                                                      caption_label,
-                                                                      image_label,
-                                                                      image_frame,
-                                                                      images,
-                                                                      image_paths,
-                                                                      tag_frame,
-                                                                      tag_arr))
-    button_forward = Button(image_frame, text=">>", command=lambda: forward(image_number + 1,
-                                                                            caption_label,
-                                                                            image_label,
-                                                                            image_frame,
-                                                                            images,
-                                                                            image_paths,
-                                                                            tag_frame,
-                                                                            tag_arr))
+    button_back = Button(image_frame, text="<<", command=lambda: cycle_images(image_number - 1,
+                                                                              caption_label,
+                                                                              image_label,
+                                                                              image_frame,
+                                                                              images,
+                                                                              image_paths,
+                                                                              tag_frame,
+                                                                              tag_arr))
+    button_forward = Button(image_frame, text=">>", command=lambda: cycle_images(image_number + 1,
+                                                                                 caption_label,
+                                                                                 image_label,
+                                                                                 image_frame,
+                                                                                 images,
+                                                                                 image_paths,
+                                                                                 tag_frame,
+                                                                                 tag_arr))
 
     if image_number == len(images):
         button_forward = Button(image_frame, text=">>", state=DISABLED)
@@ -43,46 +44,6 @@ def forward(image_number, caption_label, image_label, image_frame, images, image
     button_back.grid(row=1, column=0)
     button_forward.grid(row=1, column=2)
 
-def back(image_number, caption_label, image_label, image_frame, images, image_paths, tag_frame, tag_arr):
-    # Delete old tags
-    for i in range(0, len(tag_arr)):
-        tag_arr[i].grid_forget()
-
-    image_label.grid_forget()
-    image_label = Label(image_frame, image=images[image_number - 1])
-    image_label.grid(row=0, column=0, columnspan=3)
-
-    caption_label.grid_forget()
-    caption_label = Label(image_frame, text=getCaption(image_paths[image_number - 1]))
-    caption_label.grid(row=1, column=1)
-
-    # Display new tags
-    tag_arr = getTagLabels(image_paths[image_number - 1], tag_frame)
-    for j in range(0, len(tag_arr)):
-        tag_arr[j].grid(row=j, column=0)
-
-    button_back = Button(image_frame, text="<<", command=lambda: back(image_number - 1,
-                                                                      caption_label,
-                                                                      image_label,
-                                                                      image_frame,
-                                                                      images,
-                                                                      image_paths,
-                                                                      tag_frame,
-                                                                      tag_arr))
-    button_forward = Button(image_frame, text=">>", command=lambda: forward(image_number + 1,
-                                                                            caption_label,
-                                                                            image_label,
-                                                                            image_frame,
-                                                                            images,
-                                                                            image_paths,
-                                                                            tag_frame,
-                                                                            tag_arr))
-
-    if image_number == 1:
-        button_back = Button(image_frame, text="<<", state=DISABLED)
-
-    button_back.grid(row=1, column=0)
-    button_forward.grid(row=1, column=2)
 
 def archive(path):
     archive_window = Toplevel(height=300, width=300)
@@ -95,4 +56,3 @@ def archive(path):
 
     submit_button = Button(archive_window, text="Submit", command=lambda: upload_blob(path, zip_name_input.get()))
     submit_button.pack()
-

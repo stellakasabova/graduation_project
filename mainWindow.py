@@ -8,12 +8,12 @@ from tkinter import filedialog
 
 from getImageData import getTagLabels, getCaption
 from upload import logInTopLevel
-from buttonFunctions import forward, back, archive
-from encrypt import encrypt_keys
+from buttonFunctions import cycle_images, archive
 
 root = Tk()
 root.title('Application')
 root.state("zoomed")
+
 
 def getImages(path_param):
     logging.basicConfig(level=logging.DEBUG, filename='logs.log', format='%(asctime)s %(levelname)s:%(message)s')
@@ -55,16 +55,16 @@ def getImages(path_param):
     caption_label = Label(image_frame, text=getCaption(image_paths[0]))
     caption_label.grid(row=1, column=1)
 
-    button_back = Button(image_frame, text="<<", command=back, state=DISABLED)
+    button_back = Button(image_frame, text="<<", command=cycle_images, state=DISABLED)
     button_back.grid(row=1, column=0)
-    button_forward = Button(image_frame, text=">>", command=lambda: forward(2,
-                                                                            caption_label,
-                                                                            image_label,
-                                                                            image_frame,
-                                                                            images,
-                                                                            image_paths,
-                                                                            tag_frame,
-                                                                            tag_arr))
+    button_forward = Button(image_frame, text=">>", command=lambda: cycle_images(2,
+                                                                                 caption_label,
+                                                                                 image_label,
+                                                                                 image_frame,
+                                                                                 images,
+                                                                                 image_paths,
+                                                                                 tag_frame,
+                                                                                 tag_arr))
     button_forward.grid(row=1, column=2)
 
     archive_button = Button(tag_frame, text="Archive directory", command=lambda: archive(path_param))
@@ -75,12 +75,12 @@ def getImages(path_param):
     upload_zoonar_button.grid(row=16)
 
     upload_alamy_button = Button(tag_frame, text="Upload to Alamy",
-                                  command=lambda: logInTopLevel(path_param, 'upload.alamy.com'))
+                                 command=lambda: logInTopLevel(path_param, 'upload.alamy.com'))
     upload_alamy_button.grid(row=17)
 
     dir_button.destroy()
 
-encrypt_keys()
+
 dir_button = Button(root, text="Choose directory", command=lambda: getImages(filedialog.askdirectory()))
 dir_button.place(anchor=CENTER, relx=.5, rely=.5)
 
