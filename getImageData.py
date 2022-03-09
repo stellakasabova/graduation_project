@@ -16,9 +16,9 @@ def getTags(path):
     result = json.loads(decrypted_data)
     subscription_key = result["subscription"]
 
-    with open('sas_keys.json', 'w') as f:
-        f.write(decrypted_data)
-        f.close()
+    with open('sas_keys.json', 'w') as file:
+        file.write(decrypted_data)
+        file.close()
 
     encrypt_keys()
 
