@@ -1,6 +1,6 @@
 from cryptography.fernet import Fernet
 
-def encrypt_keys():
+def encryptKeys():
     key = Fernet.generate_key()
     with open('key.key', 'wb') as file:
         file.write(key)
@@ -21,7 +21,7 @@ def encrypt_keys():
         file.write(encrypted)
         file.close()
 
-def decrypt_keys():
+def decryptKeys():
     with open('key.key', 'rb') as fkey:
         key = fkey.read()
         fkey.close()

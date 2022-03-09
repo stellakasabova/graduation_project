@@ -9,8 +9,8 @@ from zipFiles import zipFiles
 from azure.storage.blob import BlobServiceClient
 from tkinter import messagebox
 
-def upload_blob(path, zip_name):
-    decrypted_data = str(decrypt_keys())
+def uploadBlob(path, zip_name):
+    decrypted_data = str(decryptKeys())
     decrypted_data.replace("'", '"')
 
     result = json.loads(decrypted_data)
@@ -20,7 +20,7 @@ def upload_blob(path, zip_name):
         file.write(decrypted_data)
         file.close()
 
-    encrypt_keys()
+    encryptKeys()
 
     blob_container = "blob"
 
