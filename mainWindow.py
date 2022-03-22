@@ -8,7 +8,7 @@ from tkinter import filedialog
 
 from getImageData import getTagLabels, getCaption
 from upload import logInTopLevel
-from buttonFunctions import cycleImages, archive
+from buttonFunctions import cycleImages, archive, download
 
 root = Tk()
 root.title('Application')
@@ -35,7 +35,7 @@ def getImages(path_param):
     # Resizes photos for consistent image display
     for image in image_paths:
         temp_image = PIL.Image.open(image)
-        temp_image = temp_image.resize((500, 500), PIL.Image.ANTIALIAS)
+        temp_image = temp_image.resize((600, 600), PIL.Image.ANTIALIAS)
         temp_resized = ImageTk.PhotoImage(temp_image)
         images.append(temp_resized)
 
@@ -70,13 +70,21 @@ def getImages(path_param):
     archive_button = Button(tag_frame, text="Archive directory", command=lambda: archive(path_param))
     archive_button.grid(row=15)
 
+    download_button = Button(tag_frame, text="Fetch archive", command=lambda: download(path_param))
+    download_button.grid(row=16)
+
     upload_zoonar_button = Button(tag_frame, text="Upload to Zoonar",
                                   command=lambda: logInTopLevel(path_param, 'ftp.zoonar.com'))
-    upload_zoonar_button.grid(row=16)
+    upload_zoonar_button.grid(row=17)
 
     upload_alamy_button = Button(tag_frame, text="Upload to Alamy",
                                  command=lambda: logInTopLevel(path_param, 'upload.alamy.com'))
-    upload_alamy_button.grid(row=17)
+    upload_alamy_button.grid(row=18)
+
+    upload_home_button = Button(tag_frame, text="Upload to home server",
+                                command=lambda: logInTopLevel(path_param,
+                                                              'A32900B79A49CDDDE121D03A004BB565B.asuscomm.com'))
+    upload_home_button.grid(row=17)
 
     dir_button.destroy()
 
