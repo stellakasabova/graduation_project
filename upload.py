@@ -13,15 +13,19 @@ def upload(username_input, password_input, path, server_address):
     session = ftplib.FTP(server_address)
     session.login(username_input.get(), password_input.get())
 
+    if server_address == 'upload.alamy.com':
+        session.cwd('/Stock')
+
     logger.info("Image upload started")
     try:
         # Gets images from directory
         img_extensions = ('.JPG', '.jpg', '.PNG', '.png')
         for file in os.listdir(path):
             if file.endswith(img_extensions):
-                filename, ext = os.path.splitext(file)
-                os.rename(file, filename+'.JPEG')
+                filename, ext = os.path.splitext(os.path.join(path, file))
+                os.rename(os.path.join(path, file), filename+'.JPEG')
 
+        for file in os.listdir(path):
             if file.endswith(('.JPEG', '.jpeg')):
                 img_path = os.path.join(path, file)
 
@@ -29,7 +33,8 @@ def upload(username_input, password_input, path, server_address):
                 if os.path.getsize(img_path) / (1024 * 1024) < 4:
                     addIPTCInfo(img_path)
                     session.storbinary('STOR ' + file, open(img_path, 'rb'))
-    except(ftplib.Error(), ftplib.all_errors):
+                    print("upload "+img_path)
+    except EOFError:
         logger.warning("Image upload failed")
     finally:
         logger.debug("Image upload done")
@@ -37,18 +42,19 @@ def upload(username_input, password_input, path, server_address):
     # Upload IPTC data to FTP server
     logger.info("Metadata upload started")
     try:
-        iptc_extensions = ('.JPG~', '.jpg~', '.JPEG~', '.jpeg~')
+        iptc_extensions = ('.JPEG~', '.jpeg~')
         for file in os.listdir(path):
             if file.endswith(iptc_extensions):
                 iptc_path = os.path.join(path, file)
                 session.storbinary('STOR ' + file, open(iptc_path, 'rb'))
-    except(ftplib.Error(), ftplib.all_errors):
+                print("upload meta "+iptc_path)
+    except EOFError:
         logger.warning("Metadata upload failed")
     finally:
         logger.debug("Metadata upload done")
+        messagebox.showinfo("Done", "Upload done!")
 
     session.quit()
-    messagebox.showinfo("Done", "Upload done!")
 
 # Displays a pop-up window for logging in
 def logInTopLevel(paths, server_address):

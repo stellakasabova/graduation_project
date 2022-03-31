@@ -84,7 +84,7 @@ def getImages(path_param):
     upload_home_button = Button(tag_frame, text="Upload to home server",
                                 command=lambda: logInTopLevel(path_param,
                                                               'A32900B79A49CDDDE121D03A004BB565B.asuscomm.com'))
-    upload_home_button.grid(row=17)
+    upload_home_button.grid(row=19)
 
     dir_button.destroy()
 
